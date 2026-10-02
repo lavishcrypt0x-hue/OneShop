@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wishlist | One Shop</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+}
+
+header{
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  padding:18px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:24px;
+  font-weight:800;
+}
+
+.logo-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:#2563eb;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.nav{
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+
+.nav a{
+  color:#374151;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.container{
+  width:90%;
+  max-width:1200px;
+  margin:40px auto;
+}
+
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+h1{
+  font-size:32px;
+}
+
+.count{
+  color:#6b7280;
+  font-size:14px;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+
+.product{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+}
+
+.product-image{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+
+.remove{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+  cursor:pointer;
+  font-size:18px;
+}
+
+.product-info{
+  padding:18px;
+}
+
+.category{
+  font-size:12px;
+  color:#6b7280;
+  margin-bottom:7px;
+}
+
+.name{
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.price{
+  font-size:19px;
+  font-weight:800;
+  margin-bottom:15px;
+}
+
+.add{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.add:hover{
+  background:#1d4ed8;
+}
+
+.empty{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  text-align:center;
+  padding:60px 25px;
+}
+
+.empty-icon{
+  font-size:55px;
+  margin-bottom:15px;
+}
+
+.empty p{
+  color:#6b7280;
+  margin:10px 0 25px;
+}
+
+.shop{
+  display:inline-block;
+  background:#2563eb;
+  color:white;
+  text-decoration:none;
+  padding:13px 22px;
+  border-radius:10px;
+  font-weight:700;
+}
+
+.toast{
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111827;
+  color:white;
+  padding:13px 20px;
+  border-radius:10px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+}
+
+@media(max-width:900px){
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+
+  header{
+    padding:15px 5%;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+  .nav{
+    gap:10px;
+  }
+
+  .nav a{
+    font-size:13px;
+  }
+
+  .container{
+    margin:30px auto;
+  }
+
+  h1{
+    font-size:27px;
+  }
+
+  .products{
+    grid-template-columns:1fr;
+  }
+
+  .product-image{
+    height:250px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    <div class="logo-icon">🛍</div>
+    One Shop
+  </div>
+
+  <div class="nav">
+    <a href="products.html">Products</a>
+    <a href="cart.html">Cart</a>
+    <a href="orders.html">Orders</a>
+  </div>
+
+</header>
+
+
+<div class="container">
+
+  <div class="title-row">
+
+    <h1>My Wishlist</h1>
+
+    <div class="count" id="count">
+      0 items
+    </div>
+
+  </div>
+
+  <div id="wishlist"></div>
+
+</div>
+
+
+<div class="toast" id="toast">
+  Added to cart
+</div>
+
+
+<script>
+
+const wishlistContainer =
+  document.getElementById("wishlist");
+
+const countElement =
+  document.getElementById("count");
+
+let wishlist =
+  JSON.parse(localStorage.getItem("oneShopWishlist")) || [];
+
+
+function money(value){
+  return "₹" + Number(value).toLocaleString("en-IN");
+}
+
+
+function saveWishlist(){
+
+  localStorage.setItem(
+    "oneShopWishlist",
+    JSON.stringify(wishlist)
+  );
+
+}
+
+
+function updateCount(){
+
+  countElement.textContent =
+    wishlist.length +
+    (wishlist.length === 1 ? " item" : " items");
+
+}
+
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  },2000);
+
+}
+
+
+function removeFromWishlist(index){
+
+  wishlist.splice(index,1);
+
+  saveWishlist();
+
+  renderWishlist();
+
+}
+
+
+function addToCart(index){
+
+  const product = wishlist[index];
+
+  let cart =
+    JSON.parse(localStorage.getItem("oneShopCart")) || [];
+
+  const existing =
+    cart.find(item => item.id === product.id);
+
+  if(existing){
+
+    existing.quantity++;
+
+  }else{
+
+    cart.push({
+      ...product,
+      quantity:1
+    });
+
+  }
+
+  localStorage.setItem(
+    "oneShopCart",
+    JSON.stringify(cart)
+  );
+
+  showToast("Added to cart");
+
+}
+
+
+function renderWishlist(){
+
+  updateCount();
+
+  if(wishlist.length === 0){
+
+    wishlistContainer.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-icon">♡</div>
+
+        <h2>Your Wishlist is Empty</h2>
+
+        <p>
+          Save products you love and find them here later.
+        </p>
+
+        <a href="products.html" class="shop">
+          Explore Products
+        </a>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  wishlistContainer.innerHTML = `
+
+    <div class="products">
+
+      ${wishlist.map((product,index) => `
+
+        <div class="product">
+
+          <img
+            class="product-image"
+            src="${product.image}"
+            alt="${product.name}"
+          >
+
+          <button
+            class="remove"
+            onclick="removeFromWishlist(${index})"
+            aria-label="Remove from wishlist"
+          >
+            ♥
+          </button>
+
+          <div class="product-info">
+
+            <div class="category">
+              ${product.category || "Product"}
+            </div>
+
+            <div class="name">
+              ${product.name}
+            </div>
+
+            <div class="price">
+              ${money(product.price)}
+            </div>
+
+            <button
+              class="add"
+              onclick="addToCart(${index})"
+            >
+              Add to Cart
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+  `;
+
+}
+
+
+renderWishlist();
+
+</script>
+
+</body>
+</html>
