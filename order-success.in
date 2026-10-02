@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order Confirmed | One Shop</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+  min-height:100vh;
+}
+
+header{
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  padding:18px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:24px;
+  font-weight:800;
+}
+
+.logo-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:#2563eb;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.home-link{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.container{
+  width:90%;
+  max-width:700px;
+  margin:50px auto;
+}
+
+.success-card{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:22px;
+  padding:40px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+.success-icon{
+  width:80px;
+  height:80px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  background:#dcfce7;
+  color:#16a34a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+}
+
+h1{
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.message{
+  color:#6b7280;
+  line-height:1.6;
+  margin-bottom:28px;
+}
+
+.order-box{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:15px;
+  padding:20px;
+  text-align:left;
+  margin-bottom:25px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:11px 0;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.row:last-child{
+  border-bottom:none;
+}
+
+.label{
+  color:#6b7280;
+}
+
+.value{
+  font-weight:700;
+  text-align:right;
+}
+
+.total{
+  font-size:19px;
+}
+
+.buttons{
+  display:flex;
+  gap:12px;
+}
+
+.btn{
+  flex:1;
+  padding:14px;
+  border-radius:11px;
+  text-decoration:none;
+  font-weight:700;
+  text-align:center;
+}
+
+.primary{
+  background:#2563eb;
+  color:white;
+}
+
+.secondary{
+  background:#eef2ff;
+  color:#2563eb;
+}
+
+.demo-note{
+  margin-top:20px;
+  font-size:12px;
+  color:#6b7280;
+}
+
+@media(max-width:600px){
+
+  .success-card{
+    padding:28px 20px;
+  }
+
+  h1{
+    font-size:25px;
+  }
+
+  .buttons{
+    flex-direction:column;
+  }
+
+  .row{
+    font-size:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    <div class="logo-icon">🛍</div>
+    One Shop
+  </div>
+
+  <a href="index.html" class="home-link">
+    Home
+  </a>
+
+</header>
+
+
+<div class="container">
+
+  <div class="success-card">
+
+    <div class="success-icon">
+      ✓
+    </div>
+
+    <h1>Order Confirmed!</h1>
+
+    <p class="message">
+      Your demo order has been successfully placed.
+      Thank you for shopping with One Shop.
+    </p>
+
+
+    <div class="order-box">
+
+      <div class="row">
+        <span class="label">Order ID</span>
+        <span class="value" id="orderId">---</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Order Date</span>
+        <span class="value" id="orderDate">---</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Delivery</span>
+        <span class="value" id="delivery">---</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Payment</span>
+        <span class="value" id="payment">---</span>
+      </div>
+
+      <div class="row total">
+        <span class="label">Total</span>
+        <span class="value" id="total">₹0</span>
+      </div>
+
+    </div>
+
+
+    <div class="buttons">
+
+      <a href="index.html" class="btn primary">
+        Continue Shopping
+      </a>
+
+      <a href="orders.html" class="btn secondary">
+        View Orders
+      </a>
+
+    </div>
+
+
+    <p class="demo-note">
+      This is a prototype order. No real payment or delivery has been processed.
+    </p>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const order =
+  JSON.parse(localStorage.getItem("oneShopLastOrder"));
+
+if(order){
+
+  document.getElementById("orderId").textContent =
+    order.id;
+
+  document.getElementById("orderDate").textContent =
+    order.date;
+
+  document.getElementById("delivery").textContent =
+    order.delivery;
+
+  document.getElementById("payment").textContent =
+    order.payment;
+
+  document.getElementById("total").textContent =
+    "₹" + order.total.toLocaleString("en-IN");
+
+}
+
+</script>
+
+</body>
+</html>
