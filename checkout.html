@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | One Shop</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+}
+
+header{
+  background:#ffffff;
+  border-bottom:1px solid #e5e7eb;
+  padding:18px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:24px;
+  font-weight:800;
+  color:#111827;
+}
+
+.logo-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:20px;
+}
+
+.back{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.container{
+  width:90%;
+  max-width:1150px;
+  margin:35px auto;
+}
+
+h1{
+  font-size:32px;
+  margin-bottom:25px;
+}
+
+.checkout{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:25px;
+}
+
+.card{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.card h2{
+  font-size:20px;
+  margin-bottom:20px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+label{
+  font-size:14px;
+  font-weight:600;
+}
+
+input, select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus, select:focus{
+  border-color:#2563eb;
+}
+
+.option{
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+
+.option:hover{
+  border-color:#2563eb;
+}
+
+.option label{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  cursor:pointer;
+}
+
+.demo{
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  padding:13px;
+  border-radius:10px;
+  font-size:13px;
+  color:#1e40af;
+  margin-bottom:15px;
+}
+
+.summary-item{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+
+.summary-item span:first-child{
+  max-width:65%;
+}
+
+.total-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:21px;
+  font-weight:800;
+  margin-top:20px;
+}
+
+.place-order{
+  width:100%;
+  border:none;
+  background:#2563eb;
+  color:white;
+  padding:16px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:20px;
+}
+
+.place-order:hover{
+  background:#1d4ed8;
+}
+
+.note{
+  text-align:center;
+  font-size:12px;
+  color:#6b7280;
+  margin-top:12px;
+}
+
+.empty{
+  background:white;
+  padding:40px;
+  border-radius:18px;
+  text-align:center;
+}
+
+@media(max-width:800px){
+  .checkout{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  h1{
+    font-size:27px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🛍</div>
+    One Shop
+  </div>
+
+  <a href="cart.html" class="back">← Back to Cart</a>
+</header>
+
+<div class="container">
+
+<h1>Checkout</h1>
+
+<div id="emptyBox" class="empty" style="display:none;">
+  <h2>Your cart is empty</h2>
+  <p style="margin:12px 0 20px;">Add some products before checking out.</p>
+  <a href="products.html" class="back">Continue Shopping</a>
+</div>
+
+<div id="checkoutArea" class="checkout">
+
+<div>
+
+  <div class="card">
+    <h2>Customer Information</h2>
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>Full Name *</label>
+        <input id="name" type="text" placeholder="Sample Customer">
+      </div>
+
+      <div class="field">
+        <label>Mobile Number *</label>
+        <input id="phone" type="tel" placeholder="9876543210">
+      </div>
+
+      <div class="field full">
+        <label>Email (Optional)</label>
+        <input id="email" type="email" placeholder="example@email.com">
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>Delivery Address</h2>
+
+    <div class="form-grid">
+
+      <div class="field full">
+        <label>House / Flat / Building *</label>
+        <input id="house" type="text" placeholder="House 123">
+      </div>
+
+      <div class="field full">
+        <label>Street / Area *</label>
+        <input id="area" type="text" placeholder="Main Road">
+      </div>
+
+      <div class="field">
+        <label>City *</label>
+        <input id="city" type="text" placeholder="Amritsar">
+      </div>
+
+      <div class="field">
+        <label>State *</label>
+        <input id="state" type="text" placeholder="Punjab">
+      </div>
+
+      <div class="field">
+        <label>PIN Code *</label>
+        <input id="pin" type="text" maxlength="6" placeholder="143001">
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2>Delivery Option</h2>
+
+    <div class="option">
+      <label>
+        <input type="radio" name="delivery" value="Standard Delivery" checked>
+        <span>
+          <strong>Standard Delivery</strong><br>
+          <small>3–7 days • Free</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="option">
+      <label>
+        <input type="radio" name="delivery" value="Express Delivery">
+        <span>
+          <strong>Express Delivery</strong><br>
+          <small>1–2 days • ₹99</small>
+        </span>
+      </label>
+    </div>
+
+  </div>
+
+
+  <div class="card">
+    <h2>Payment Method</h2>
+
+    <div class="demo">
+      <strong>Demo Payment</strong><br>
+      This is a website prototype. No real payment will be processed.
+    </div>
+
+    <div class="option">
+      <label>
+        <input type="radio" name="payment" value="UPI Demo" checked>
+        UPI — Demo
+      </label>
+    </div>
+
+    <div class="option">
+      <label>
+        <input type="radio" name="payment" value="Card Demo">
+        Card — Demo
+      </label>
+    </div>
+
+    <div class="option">
+      <label>
+        <input type="radio" name="payment" value="Cash on Delivery">
+        Cash on Delivery — Demo
+      </label>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div>
+
+  <div class="card">
+
+    <h2>Order Summary</h2>
+
+    <div id="summary"></div>
+
+    <div class="summary-item">
+      <span>Subtotal</span>
+      <span id="subtotal">₹0</span>
+    </div>
+
+    <div class="summary-item">
+      <span>Delivery</span>
+      <span id="delivery">Free</span>
+    </div>
+
+    <div class="total-row">
+      <span>Total</span>
+      <span id="total">₹0</span>
+    </div>
+
+    <button class="place-order" onclick="placeOrder()">
+      Place Demo Order
+    </button>
+
+    <div class="note">
+      Prototype only • No real payment or delivery processing
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("oneShopCart")) || [];
+
+const summary = document.getElementById("summary");
+const subtotalEl = document.getElementById("subtotal");
+const deliveryEl = document.getElementById("delivery");
+const totalEl = document.getElementById("total");
+
+function money(value){
+  return "₹" + value.toLocaleString("en-IN");
+}
+
+function calculate(){
+
+  let subtotal = 0;
+
+  summary.innerHTML = "";
+
+  cart.forEach(item => {
+
+    subtotal += item.price * item.quantity;
+
+    summary.innerHTML += `
+      <div class="summary-item">
+        <span>${item.name} × ${item.quantity}</span>
+        <span>${money(item.price * item.quantity)}</span>
+      </div>
+    `;
+
+  });
+
+  let delivery = 0;
+
+  const selected =
+    document.querySelector('input[name="delivery"]:checked');
+
+  if(selected && selected.value === "Express Delivery"){
+    delivery = 99;
+  }
+
+  subtotalEl.textContent = money(subtotal);
+  deliveryEl.textContent =
+    delivery === 0 ? "Free" : money(delivery);
+
+  totalEl.textContent = money(subtotal + delivery);
+}
+
+document.querySelectorAll('input[name="delivery"]')
+.forEach(option => {
+  option.addEventListener("change", calculate);
+});
+
+
+function placeOrder(){
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const house = document.getElementById("house").value.trim();
+  const area = document.getElementById("area").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const state = document.getElementById("state").value.trim();
+  const pin = document.getElementById("pin").value.trim();
+
+  if(!name || !phone || !house || !area ||
+     !city || !state || !pin){
+
+    alert("Please fill all required fields.");
+    return;
+  }
+
+  const deliveryMethod =
+    document.querySelector('input[name="delivery"]:checked').value;
+
+  const paymentMethod =
+    document.querySelector('input[name="payment"]:checked').value;
+
+  let subtotal = cart.reduce(
+    (sum,item) => sum + item.price * item.quantity,
+    0
+  );
+
+  const deliveryCost =
+    deliveryMethod === "Express Delivery" ? 99 : 0;
+
+  const total = subtotal + deliveryCost;
+
+  const orderId =
+    "OS-" + Date.now().toString().slice(-8);
+
+  const order = {
+
+    id: orderId,
+
+    date: new Date().toLocaleString("en-IN"),
+
+    customer:{
+      name:name,
+      phone:phone,
+      email:document.getElementById("email").value.trim()
+    },
+
+    address:{
+      house:house,
+      area:area,
+      city:city,
+      state:state,
+      pin:pin
+    },
+
+    delivery:deliveryMethod,
+
+    payment:paymentMethod,
+
+    items:cart,
+
+    subtotal:subtotal,
+
+    deliveryCost:deliveryCost,
+
+    total:total
+
+  };
+
+  let orders =
+    JSON.parse(localStorage.getItem("oneShopOrders")) || [];
+
+  orders.push(order);
+
+  localStorage.setItem(
+    "oneShopOrders",
+    JSON.stringify(orders)
+  );
+
+  localStorage.setItem(
+    "oneShopLastOrder",
+    JSON.stringify(order)
+  );
+
+  localStorage.removeItem("oneShopCart");
+
+  window.location.href = "order-success.html";
+}
+
+
+if(cart.length === 0){
+
+  document.getElementById("checkoutArea").style.display="none";
+  document.getElementById("emptyBox").style.display="block";
+
+}else{
+
+  calculate();
+
+}
+
+</script>
+
+</body>
+</html>
