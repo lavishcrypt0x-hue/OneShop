@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Orders | One Shop</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+}
+
+header{
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  padding:18px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:24px;
+  font-weight:800;
+}
+
+.logo-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:#2563eb;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.home{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.container{
+  width:90%;
+  max-width:1000px;
+  margin:40px auto;
+}
+
+h1{
+  font-size:32px;
+  margin-bottom:25px;
+}
+
+.order{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:20px;
+}
+
+.order-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding-bottom:18px;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.order-id{
+  font-weight:800;
+  font-size:17px;
+}
+
+.date{
+  color:#6b7280;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.status{
+  background:#dcfce7;
+  color:#15803d;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:700;
+  height:max-content;
+}
+
+.items{
+  padding:18px 0;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:9px 0;
+  font-size:14px;
+}
+
+.order-bottom{
+  border-top:1px solid #e5e7eb;
+  padding-top:18px;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.details{
+  color:#6b7280;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.total{
+  font-size:20px;
+  font-weight:800;
+}
+
+.empty{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  text-align:center;
+  padding:55px 25px;
+}
+
+.empty-icon{
+  font-size:50px;
+  margin-bottom:15px;
+}
+
+.empty p{
+  color:#6b7280;
+  margin:10px 0 25px;
+}
+
+.shop-btn{
+  display:inline-block;
+  background:#2563eb;
+  color:white;
+  text-decoration:none;
+  padding:13px 22px;
+  border-radius:10px;
+  font-weight:700;
+}
+
+@media(max-width:600px){
+
+  h1{
+    font-size:27px;
+  }
+
+  .order-top,
+  .order-bottom{
+    flex-direction:column;
+  }
+
+  .status{
+    align-self:flex-start;
+  }
+
+  .total{
+    font-size:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    <div class="logo-icon">🛍</div>
+    One Shop
+  </div>
+
+  <a href="index.html" class="home">
+    Home
+  </a>
+
+</header>
+
+
+<div class="container">
+
+<h1>My Orders</h1>
+
+<div id="orders"></div>
+
+</div>
+
+
+<script>
+
+const ordersContainer =
+  document.getElementById("orders");
+
+const orders =
+  JSON.parse(localStorage.getItem("oneShopOrders")) || [];
+
+
+function money(value){
+  return "₹" + Number(value).toLocaleString("en-IN");
+}
+
+
+if(orders.length === 0){
+
+  ordersContainer.innerHTML = `
+
+    <div class="empty">
+
+      <div class="empty-icon">📦</div>
+
+      <h2>No Orders Yet</h2>
+
+      <p>
+        You haven't placed any orders yet.
+      </p>
+
+      <a href="products.html" class="shop-btn">
+        Start Shopping
+      </a>
+
+    </div>
+
+  `;
+
+}else{
+
+  [...orders].reverse().forEach(order => {
+
+    let itemsHTML = "";
+
+    order.items.forEach(item => {
+
+      itemsHTML += `
+
+        <div class="item">
+
+          <span>
+            ${item.name} × ${item.quantity}
+          </span>
+
+          <strong>
+            ${money(item.price * item.quantity)}
+          </strong>
+
+        </div>
+
+      `;
+
+    });
+
+
+    ordersContainer.innerHTML += `
+
+      <div class="order">
+
+        <div class="order-top">
+
+          <div>
+
+            <div class="order-id">
+              Order ${order.id}
+            </div>
+
+            <div class="date">
+              ${order.date}
+            </div>
+
+          </div>
+
+          <div class="status">
+            Demo Order
+          </div>
+
+        </div>
+
+
+        <div class="items">
+
+          ${itemsHTML}
+
+        </div>
+
+
+        <div class="order-bottom">
+
+          <div class="details">
+
+            <strong>Delivery:</strong>
+            ${order.delivery}
+            <br>
+
+            <strong>Payment:</strong>
+            ${order.payment}
+            <br>
+
+            <strong>City:</strong>
+            ${order.address.city}
+
+          </div>
+
+
+          <div class="total">
+
+            ${money(order.total)}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>
