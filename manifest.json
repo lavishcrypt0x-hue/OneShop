@@ -1,12 +1,12 @@
 {
-  "name": "One Shop",
-  "short_name": "One Shop",
+  "name": "OneShop",
+  "short_name": "OneShop",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0b1220",
   "theme_color": "#0b1220",
-  "description": "One Shop — Everything in One Place",
+  "description": "OneShop — Everything in One Place",
   "icons": [
     {
       "src": "icon-192.png",
