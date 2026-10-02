@@ -1,4 +1,4 @@
-const CACHE_NAME = "one-shop-v2";
+const CACHE_NAME = "oneshop-v2";
 
 const APP_SHELL = [
   "./",
